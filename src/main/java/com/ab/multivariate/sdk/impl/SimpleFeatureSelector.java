@@ -5,10 +5,12 @@ import com.ab.multivariate.sdk.exception.FeatureSelectionException;
 import com.ab.multivariate.sdk.model.ServiceSelectionResponse;
 import com.ab.multivariate.sdk.service.MultiVariateService;
 import com.ab.multivariate.sdk.strategy.FeatureSelector;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+@Slf4j
 @Service
 public class SimpleFeatureSelector implements FeatureSelector {
 
@@ -31,6 +33,7 @@ public class SimpleFeatureSelector implements FeatureSelector {
             executionGroupName = response.getFeatureGroupId();
         }
 
+        log.info("Execution Group Selected {}", executionGroupName);
         return executionGroupName;
     }
 }

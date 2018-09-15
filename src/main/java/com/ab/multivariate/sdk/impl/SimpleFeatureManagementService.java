@@ -8,11 +8,13 @@ import com.ab.multivariate.sdk.strategy.ExceptionHandler;
 import com.ab.multivariate.sdk.strategy.FeatureExecutor;
 import com.ab.multivariate.sdk.strategy.FeatureManagementService;
 import com.ab.multivariate.sdk.strategy.FeatureSelector;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class SimpleFeatureManagementService implements FeatureManagementService {
 
@@ -30,6 +32,8 @@ public class SimpleFeatureManagementService implements FeatureManagementService 
         SimpleExceptionContext exceptionContext = new SimpleExceptionContext();
         try {
             FeatureChoiceContext choiceContext = context.getFeatureChoiceContext();
+            log.info("Determine Execution strategy for feature {}, caller {}, caller group {}",
+                    choiceContext.getFeatureName(), choiceContext.getCallerId(), choiceContext.getCallerGroupId());
             String executionStrategy = featureSelector.getExecutionStrategy(choiceContext);
 
             List<FeatureExecutor> executorList = context.getExecutorForStrategy(executionStrategy);
